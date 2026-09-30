@@ -1,0 +1,8 @@
+{
+  "name": "Gede Bali Trip",
+  "description": "Website travel agency resmi GedeBaliTrip untuk menjelajahi keindahan Pulau Bali.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
