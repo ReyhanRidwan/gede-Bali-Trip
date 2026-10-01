@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { TourPackage, Language } from '../types';
 import { COMPANY_INFO } from '../data/packages';
+import { getOptimizedCloudinaryUrl } from '../utils/cloudinary';
 import {
   Calendar as CalendarIcon,
   Users,
@@ -159,30 +160,33 @@ export const BookingCalendarModal: React.FC<BookingCalendarModalProps> = ({
     }
 
     if (!whatsappNumber.trim()) {
-      setErrorMessage(isId ? 'Mohon masukkan Nomor WhatsApp aktif.' : 'Please enter your WhatsApp number.');
+      setErrorMessage(isId ? 'Mohon masukkan Nomor WhatsApp.' : 'Please enter your WhatsApp number.');
       setActiveTab('details');
       return;
     }
 
-    const fullFormattedDate = selectedDate.toLocaleDateString(isId ? 'id-ID' : 'en-US', {
+    const fullFormattedDate = selectedDate.toLocaleDateString('en-US', {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
       day: 'numeric',
     });
 
+    const packageTitle = pkg.titleEn || pkg.title;
+    const packageDuration = pkg.durationEn || pkg.duration;
+
     const waText = encodeURIComponent(
-      `*RESERVASI PAKET TOUR - GEDEBALITRIP*\n\n` +
-      `📌 *Paket:* ${pkg.title}\n` +
-      `⏱️ *Durasi:* ${isId ? pkg.duration : pkg.durationEn}\n` +
-      `📅 *Tanggal Tour:* ${fullFormattedDate}\n` +
-      `👤 *Nama Pemesan:* ${guestName}\n` +
-      `📱 *No. WhatsApp:* ${whatsappNumber}\n` +
-      `👥 *Jumlah Peserta:* ${guestCount} Orang (${carsNeeded} Mobil Private)\n` +
-      `📍 *Lokasi Penjemputan:* ${pickupLocation}\n` +
-      `💰 *Estimasi Total:* USD $${totalUsdPrice} (${carsNeeded} mobil private up to 10 jam)\n` +
-      (specialNotes ? `📝 *Catatan Khusus:* ${specialNotes}\n\n` : `\n`) +
-      `Mohon info ketersediaan driver dan konfirmasi reservasinya. Terima kasih!`
+      `*BALI TOUR RESERVATION - GEDEBALITRIP*\n\n` +
+      `📌 *Package:* ${packageTitle}\n` +
+      `⏱️ *Duration:* ${packageDuration}\n` +
+      `📅 *Tour Date:* ${fullFormattedDate}\n` +
+      `👤 *Lead Guest Name:* ${guestName}\n` +
+      `📱 *WhatsApp:* ${whatsappNumber}\n` +
+      `👥 *Number of Guests:* ${guestCount} Person(s) (${carsNeeded} Private AC Car${carsNeeded > 1 ? 's' : ''})\n` +
+      `📍 *Pickup Location / Hotel:* ${pickupLocation}\n` +
+      `💰 *Estimated Total:* USD $${totalUsdPrice} (${carsNeeded} private car${carsNeeded > 1 ? 's' : ''} up to 10 hours)\n` +
+      (specialNotes ? `📝 *Special Requests:* ${specialNotes}\n\n` : `\n`) +
+      `Please check driver availability and confirm this reservation. Thank you!`
     );
 
     window.open(`https://wa.me/${COMPANY_INFO.whatsapp}?text=${waText}`, '_blank');
@@ -443,7 +447,7 @@ export const BookingCalendarModal: React.FC<BookingCalendarModalProps> = ({
                 <div>
                   <label className="block text-xs font-bold text-neutral-700 mb-1 flex items-center gap-1.5">
                     <Phone className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>{isId ? 'Nomor WhatsApp Aktif *' : 'Active WhatsApp Number *'}</span>
+                    <span>{isId ? 'Nomor WhatsApp *' : 'WhatsApp Number *'}</span>
                   </label>
                   <input
                     type="tel"
@@ -546,8 +550,12 @@ export const BookingCalendarModal: React.FC<BookingCalendarModalProps> = ({
             {/* Thumbnail Image */}
             <div className="rounded-2xl overflow-hidden h-28 w-full border border-white/10">
               <img
-                src={pkg.image}
+                src={getOptimizedCloudinaryUrl(pkg.image, { width: 400 })}
                 alt={pkg.title}
+                width="300"
+                height="112"
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover"
               />
             </div>

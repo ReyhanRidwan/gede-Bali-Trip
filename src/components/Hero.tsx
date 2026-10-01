@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Navbar } from './Navbar';
 import { Language, TourPackage } from '../types';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { getOptimizedCloudinaryUrl, getCloudinarySrcSet } from '../utils/cloudinary';
 
 const HERO_SLIDES = [
   {
@@ -39,17 +40,18 @@ export const Hero: React.FC<HeroProps> = ({
   onSelectPackage,
 }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [loadSecondarySlides, setLoadSecondarySlides] = useState(false);
 
-  // Trigger initial fade-in on mount
+  // Defer non-critical slides so mobile network bandwidth focuses entirely on primary LCP image
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoaded(true), 50);
+    const timer = setTimeout(() => setLoadSecondarySlides(true), 3500);
     return () => clearTimeout(timer);
   }, []);
 
   // Automatic slide transition every 5 seconds (5000ms)
   useEffect(() => {
     const interval = setInterval(() => {
+      setLoadSecondarySlides(true);
       setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
     }, 5000);
 
@@ -57,10 +59,12 @@ export const Hero: React.FC<HeroProps> = ({
   }, [currentSlide]);
 
   const handlePrevSlide = () => {
+    setLoadSecondarySlides(true);
     setCurrentSlide((prev) => (prev === 0 ? HERO_SLIDES.length - 1 : prev - 1));
   };
 
   const handleNextSlide = () => {
+    setLoadSecondarySlides(true);
     setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
   };
 
@@ -74,10 +78,17 @@ export const Hero: React.FC<HeroProps> = ({
         id="hero-rounded-banner"
         className="w-full max-w-[1560px] mx-auto min-h-[580px] sm:min-h-[640px] md:min-h-[720px] lg:min-h-[780px] xl:min-h-[820px] rounded-[24px] sm:rounded-[32px] md:rounded-[38px] overflow-hidden relative shadow-2xl flex flex-col justify-between border border-black/5"
       >
-        {/* Background Slideshow with Smooth Crossfade & Fade-in */}
+        {/* Background Slideshow with Smooth Crossfade & Immediate LCP Paint */}
         <div className="absolute inset-0 w-full h-full z-0 overflow-hidden bg-neutral-950">
           {HERO_SLIDES.map((slide, index) => {
             const isActive = index === currentSlide;
+            const isFirst = index === 0;
+
+            // Only mount secondary images when needed to prevent mobile network congestion
+            if (!isFirst && !loadSecondarySlides) {
+              return null;
+            }
+
             return (
               <div
                 key={slide.id}
@@ -86,12 +97,18 @@ export const Hero: React.FC<HeroProps> = ({
                 }`}
               >
                 <img
-                  src={slide.url}
+                  src={getOptimizedCloudinaryUrl(slide.url, { width: 800 })}
+                  srcSet={getCloudinarySrcSet(slide.url, [360, 480, 800, 1200, 1600])}
+                  sizes="(max-width: 768px) 100vw, 1560px"
                   alt={slide.alt}
+                  width="1560"
+                  height="820"
                   className={`w-full h-full object-cover object-center transition-transform duration-7000 ease-out ${
                     isActive ? 'scale-105' : 'scale-100'
                   }`}
-                  loading={index === 0 ? 'eager' : 'lazy'}
+                  loading={isFirst ? 'eager' : 'lazy'}
+                  fetchPriority={isFirst ? 'high' : 'low'}
+                  decoding={isFirst ? 'sync' : 'async'}
                 />
               </div>
             );
@@ -103,12 +120,8 @@ export const Hero: React.FC<HeroProps> = ({
           <div className="absolute inset-x-0 bottom-0 h-80 bg-gradient-to-t from-black/85 via-black/50 to-transparent z-10" />
         </div>
 
-        {/* Top Navbar Area */}
-        <div
-          className={`relative z-50 px-6 sm:px-10 lg:px-12 pt-6 sm:pt-8 transition-all duration-1000 ease-out ${
-            isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
-          }`}
-        >
+        {/* Top Navbar Area - Rendered immediately without JS opacity-0 delay for instant First Paint */}
+        <div className="relative z-50 px-6 sm:px-10 lg:px-12 pt-6 sm:pt-8 opacity-100 translate-y-0">
           <Navbar
             currentLanguage={currentLanguage}
             packages={packages}
@@ -116,16 +129,12 @@ export const Hero: React.FC<HeroProps> = ({
           />
         </div>
 
-        {/* Center Hero Headline & Tag with Fade-in Animation */}
-        <div
-          className={`relative z-10 my-auto py-10 sm:py-16 px-4 sm:px-6 flex flex-col items-center justify-center text-center transition-all duration-1000 delay-150 ease-out ${
-            isLoaded ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-6'
-          }`}
-        >
+        {/* Center Hero Headline & Tag - Rendered immediately for top mobile LCP score */}
+        <div className="relative z-10 my-auto py-10 sm:py-16 px-4 sm:px-6 flex flex-col items-center justify-center text-center opacity-100 scale-100 translate-y-0">
           {/* Pill Badge */}
           <div
             id="hero-badge-tag"
-            className="inline-flex items-center px-4 sm:px-5 py-1.5 rounded-full border border-white/40 bg-black/30 backdrop-blur-xs text-white text-xs sm:text-sm font-medium tracking-normal mb-5 sm:mb-7 shadow-sm select-none animate-in fade-in duration-700"
+            className="inline-flex items-center px-4 sm:px-5 py-1.5 rounded-full border border-white/40 bg-black/30 backdrop-blur-xs text-white text-xs sm:text-sm font-medium tracking-normal mb-5 sm:mb-7 shadow-sm select-none"
           >
             {currentLanguage === 'id'
               ? 'Travel Agency Bali Terlengkap'
@@ -168,7 +177,10 @@ export const Hero: React.FC<HeroProps> = ({
                 <button
                   key={idx}
                   type="button"
-                  onClick={() => setCurrentSlide(idx)}
+                  onClick={() => {
+                    setLoadSecondarySlides(true);
+                    setCurrentSlide(idx);
+                  }}
                   aria-label={`Go to slide ${idx + 1}`}
                   className={`h-2 rounded-full transition-all duration-500 cursor-pointer ${
                     currentSlide === idx
@@ -191,11 +203,7 @@ export const Hero: React.FC<HeroProps> = ({
         </div>
 
         {/* Bottom Bar: Left Description Paragraph & Right "Lihat Paket ⟶" Button */}
-        <div
-          className={`relative z-20 px-6 sm:px-10 lg:px-12 pb-8 sm:pb-12 transition-all duration-1000 delay-300 ease-out ${
-            isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-          }`}
-        >
+        <div className="relative z-20 px-6 sm:px-10 lg:px-12 pb-8 sm:pb-12 opacity-100 translate-y-0">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             {/* Bottom Left Paragraph */}
             <p

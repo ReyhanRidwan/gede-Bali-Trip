@@ -18,7 +18,7 @@ export const PackageModal: React.FC<PackageModalProps> = ({
 
   const isId = currentLanguage === 'id';
   const whatsappMessage = encodeURIComponent(
-    `Halo GedeBaliTrip, saya ingin memesan atau konsultasi untuk: *${pkg.title}* (${isId ? pkg.duration : pkg.durationEn}) seharga USD $${pkg.price} ${isId ? pkg.priceNote : pkg.priceNoteEn}. Mohon info ketersediaan tanggal dan jadwalnya. Terima kasih!`
+    `Hello GedeBaliTrip, I would like to book or inquire about: *${pkg.titleEn || pkg.title}* (${pkg.durationEn || pkg.duration}) at USD $${pkg.price} ${pkg.priceNoteEn || pkg.priceNote}. Please let me know driver and schedule availability. Thank you!`
   );
   const whatsappUrl = `https://wa.me/${COMPANY_INFO.whatsapp}?text=${whatsappMessage}`;
 

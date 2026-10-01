@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Language, TourPackage } from '../types';
+import { getOptimizedCloudinaryUrl, getCloudinarySrcSet } from '../utils/cloudinary';
 
 interface DestinationItem {
   id: string;
@@ -134,7 +135,7 @@ interface DestinationCardProps {
 }
 
 const DestinationCard: React.FC<DestinationCardProps> = ({ dest, isId }) => {
-  const [imageSrc, setImageSrc] = useState(dest.image);
+  const [imageSrc, setImageSrc] = useState(() => getOptimizedCloudinaryUrl(dest.image, { width: 720 }));
 
   return (
     <div
@@ -144,10 +145,15 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ dest, isId }) => {
       {/* Background Destination Photo */}
       <img
         src={imageSrc}
+        srcSet={getCloudinarySrcSet(dest.image, [360, 480, 720])}
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
         alt={isId ? dest.name : dest.nameEn}
+        width="600"
+        height="320"
         onError={() => setImageSrc(dest.fallbackImage)}
         className="w-full h-full object-cover"
         loading="lazy"
+        decoding="async"
       />
 
       {/* Dark gradient overlay */}

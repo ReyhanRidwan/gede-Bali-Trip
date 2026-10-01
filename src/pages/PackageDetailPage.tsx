@@ -4,6 +4,7 @@ import { PageHeaderBanner } from '../components/PageHeaderBanner';
 import { BookingCalendarModal } from '../components/BookingCalendarModal';
 import { TourPackage, Language } from '../types';
 import { COMPANY_INFO } from '../data/packages';
+import { getOptimizedCloudinaryUrl, getCloudinarySrcSet } from '../utils/cloudinary';
 import {
   Clock,
   CheckCircle2,
@@ -80,8 +81,14 @@ export const PackageDetailPage: React.FC<PackageDetailPageProps> = ({
         {/* 1. Hero Photo Card */}
         <div className="w-full rounded-[24px] sm:rounded-[36px] overflow-hidden relative shadow-2xl h-[320px] sm:h-[460px] md:h-[500px] mb-6 sm:mb-10 border border-neutral-200">
           <img
-            src={pkg.image}
+            src={getOptimizedCloudinaryUrl(pkg.image, { width: 1080 })}
+            srcSet={getCloudinarySrcSet(pkg.image, [360, 480, 768, 1080])}
+            sizes="(max-width: 768px) 100vw, 1200px"
             alt={pkg.title}
+            width="1200"
+            height="500"
+            loading="eager"
+            decoding="async"
             className="w-full h-full object-cover"
           />
           {/* Overlays */}
@@ -397,7 +404,7 @@ export const PackageDetailPage: React.FC<PackageDetailPageProps> = ({
               </p>
               <a
                 href={`https://wa.me/${COMPANY_INFO.whatsapp}?text=${encodeURIComponent(
-                  `Halo GedeBaliTrip, saya ingin memesan atau konsultasi untuk: *${pkg.title} (USD $${pkg.price} / car)*. Mohon info ketersediaan jadwalnya.`
+                  `Hello GedeBaliTrip, I would like to inquire or book: *${pkg.titleEn || pkg.title} (USD $${pkg.price} / car)*. Please let me know driver and schedule availability. Thank you!`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"

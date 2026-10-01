@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { PageHeaderBanner } from '../components/PageHeaderBanner';
 import { Language, TourPackage } from '../types';
 import { COMPANY_INFO } from '../data/packages';
-import destBedugul from '../assets/images/dest_bedugul_1790762178211.jpg';
 import {
   Phone,
   MessageCircle,
@@ -11,7 +10,6 @@ import {
   Clock,
   Send,
   CheckCircle2,
-  ChevronDown,
   ExternalLink,
 } from 'lucide-react';
 
@@ -38,59 +36,23 @@ export const ContactPage: React.FC<ContactPageProps> = ({
   const [notes, setNotes] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
 
-  // FAQ Open State
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const text = encodeURIComponent(
-      `Halo GedeBaliTrip, saya ingin reservasi/konsultasi tour Bali:\n\n` +
-      `*Nama:* ${name}\n` +
-      `*No HP/WA:* ${phoneNumber}\n` +
-      `*Paket Tour:* ${selectedPackage}\n` +
-      `*Tanggal Trip:* ${tripDate || 'Belum ditentukan'}\n` +
-      `*Jumlah Peserta:* ${paxCount} Orang\n` +
-      `*Area Penjemputan:* ${pickupArea}\n` +
-      `*Catatan Khusus:* ${notes || '-'}\n\n` +
-      `Mohon info ketersediaan dan total biayanya. Terima kasih!`
+      `*BALI TOUR INQUIRY - GEDEBALITRIP*\n\n` +
+      `*Full Name:* ${name}\n` +
+      `*WhatsApp:* ${phoneNumber}\n` +
+      `*Selected Tour:* ${selectedPackage}\n` +
+      `*Tour Date:* ${tripDate || 'To be decided'}\n` +
+      `*Number of Guests:* ${paxCount} Person(s)\n` +
+      `*Pickup Area / Hotel:* ${pickupArea}\n` +
+      `*Special Notes:* ${notes || '-'}\n\n` +
+      `Please provide driver availability and official quote. Thank you!`
     );
 
     window.open(`https://wa.me/${COMPANY_INFO.whatsapp}?text=${text}`, '_blank');
     setIsSuccess(true);
   };
-
-  const faqs = [
-    {
-      qId: 'Bagaimana cara melakukan pemesanan paket tour?',
-      qEn: 'How do I book a tour package with GedeBaliTrip?',
-      aId: 'Pemesanan sangat mudah! Cukup hubungi kami via WhatsApp atau isi form di halaman ini. Tim kami akan mengonfirmasi ketersediaan tanggal, jadwal penjemputan, dan rincian harga secara transparan.',
-      aEn: 'Booking is effortless! Simply contact us on WhatsApp or submit the form above. Our team will verify dates, pickup times, and itemized transparent pricing instantly.',
-    },
-    {
-      qId: 'Apakah tour bersifat privat atau digabung dengan rombongan lain?',
-      qEn: 'Are the tours private or shared with other groups?',
-      aId: 'Semua paket tour GedeBaliTrip bersifat 100% PRIVATE TOUR. Anda dan keluarga tidak akan pernah digabung dengan orang asing di dalam kendaraan demi kenyamanan dan keleluasaan waktu Anda.',
-      aEn: 'All our tour packages are 100% PRIVATE. You and your party will never be grouped with strangers in the vehicle for optimal privacy and flexible timing.',
-    },
-    {
-      qId: 'Apakah penjemputan bisa langsung di Bandara Ngurah Rai atau Villa?',
-      qEn: 'Can we be picked up directly from DPS Airport or private villa?',
-      aId: 'Tentu bisa! Driver kami siap menjemput Anda tepat waktu di seluruh area populer Bali (Kuta, Seminyak, Canggu, Nusa Dua, Jimbaran, Ubud, Sanur) serta penjemputan kedatangan di Bandara Internasional Ngurah Rai.',
-      aEn: 'Absolutely! Our drivers provide prompt door-to-door pickup across Bali (Kuta, Seminyak, Canggu, Nusa Dua, Ubud, Sanur) as well as airport arrivals at DPS Ngurah Rai.',
-    },
-    {
-      qId: 'Bagaimana kebijakan pembayaran dan uang muka (DP)?',
-      qEn: 'What is the deposit and payment policy?',
-      aId: 'Untuk mengunci jadwal driver dan armada, kami hanya memerlukan DP ringan (20-30%). Sisa pembayaran dapat dilunasi secara fleksibel (Transfer / Tunai) saat hari tour berlangsung.',
-      aEn: 'To secure your vehicle and driver, we require a small deposit (20-30%). The remaining balance can be settled comfortably via transfer or cash upon trip day.',
-    },
-    {
-      qId: 'Bagaimana jika cuaca buruk saat penyeberangan Nusa Penida?',
-      qEn: 'What happens if fast boat is canceled due to extreme sea weather?',
-      aId: 'Keselamatan adalah prioritas utama. Jika otoritas pelabuhan membatalkan fast boat karena ombak besar, Anda berhak reschedule tanggal secara gratis atau mendapatkan refund penuh uang muka.',
-      aEn: 'Safety is our highest priority. If port authorities halt fast boats due to sea warnings, you receive a 100% free reschedule or a full deposit refund.',
-    },
-  ];
 
   return (
     <div className="w-full">
@@ -369,49 +331,6 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                 )}
               </form>
             </div>
-          </div>
-        </div>
-
-        {/* Frequently Asked Questions (FAQ) */}
-        <div className="mt-20 max-w-4xl mx-auto">
-          <div className="text-center mb-10">
-            <span className="text-xs font-bold text-amber-600 uppercase tracking-wider">
-              {isId ? 'Tanya Jawab' : 'Common Inquiries'}
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-neutral-900 mt-1">
-              {isId ? 'Pertanyaan yang Sering Diajukan' : 'Frequently Asked Questions (FAQ)'}
-            </h2>
-          </div>
-
-          <div className="space-y-3">
-            {faqs.map((faq, idx) => {
-              const isOpen = openFaq === idx;
-              return (
-                <div
-                  key={idx}
-                  className="rounded-2xl border border-neutral-200 bg-white overflow-hidden transition-all shadow-xs"
-                >
-                  <button
-                    type="button"
-                    onClick={() => setOpenFaq(isOpen ? null : idx)}
-                    className="w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-sm sm:text-base text-neutral-900 hover:text-amber-600 transition cursor-pointer"
-                  >
-                    <span>{isId ? faq.qId : faq.qEn}</span>
-                    <ChevronDown
-                      className={`w-5 h-5 text-neutral-400 shrink-0 transition-transform duration-200 ${
-                        isOpen ? 'rotate-180 text-amber-600' : ''
-                      }`}
-                    />
-                  </button>
-
-                  {isOpen && (
-                    <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-neutral-600 leading-relaxed border-t border-neutral-100 bg-neutral-50/50">
-                      {isId ? faq.aId : faq.aEn}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
           </div>
         </div>
       </section>

@@ -9,9 +9,37 @@
     <meta property="og:description" content="Website travel agency resmi GedeBaliTrip untuk menjelajahi keindahan Pulau Bali." />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,600;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Preconnect to external image & font origins -->
+    <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Preload primary LCP hero image for fast Mobile paint (matches <img> srcset & sizes exactly) -->
+    <link
+      rel="preload"
+      as="image"
+      href="https://res.cloudinary.com/di6ziqvtp/image/upload/f_auto,q_auto,w_800,c_limit/v1790767450/e4a0449d-0195-4e6d-b0e5-73dbaa7dba61.png"
+      imagesrcset="https://res.cloudinary.com/di6ziqvtp/image/upload/f_auto,q_auto,w_360,c_limit/v1790767450/e4a0449d-0195-4e6d-b0e5-73dbaa7dba61.png 360w, https://res.cloudinary.com/di6ziqvtp/image/upload/f_auto,q_auto,w_480,c_limit/v1790767450/e4a0449d-0195-4e6d-b0e5-73dbaa7dba61.png 480w, https://res.cloudinary.com/di6ziqvtp/image/upload/f_auto,q_auto,w_800,c_limit/v1790767450/e4a0449d-0195-4e6d-b0e5-73dbaa7dba61.png 800w, https://res.cloudinary.com/di6ziqvtp/image/upload/f_auto,q_auto,w_1200,c_limit/v1790767450/e4a0449d-0195-4e6d-b0e5-73dbaa7dba61.png 1200w, https://res.cloudinary.com/di6ziqvtp/image/upload/f_auto,q_auto,w_1600,c_limit/v1790767450/e4a0449d-0195-4e6d-b0e5-73dbaa7dba61.png 1600w"
+      imagesizes="(max-width: 768px) 100vw, 1560px"
+      fetchpriority="high"
+    />
+
+    <!-- Asynchronous Non-Render-Blocking Web Fonts with swap (Only requested used variant: Playfair Display italic 400) -->
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&display=swap">
+    </noscript>
   </head>
   <body>
     <div id="root"></div>

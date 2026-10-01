@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar } from './Navbar';
 import { Language, TourPackage } from '../types';
+import { getOptimizedCloudinaryUrl, getCloudinarySrcSet } from '../utils/cloudinary';
 
 const DEFAULT_PAGE_HEADER_BG = 'https://res.cloudinary.com/di6ziqvtp/image/upload/v1790767969/558720c6-5250-4840-877f-7baab5c6d63a.png';
 
@@ -42,8 +43,14 @@ export const PageHeaderBanner: React.FC<PageHeaderBannerProps> = ({
         {/* Scenic Bali Background Image */}
         <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
           <img
-            src={imgSrc}
+            src={getOptimizedCloudinaryUrl(imgSrc, { width: 1080 })}
+            srcSet={getCloudinarySrcSet(imgSrc, [480, 768, 1080, 1560])}
+            sizes="(max-width: 768px) 100vw, 1560px"
             alt="Bali Scenic Landscape"
+            width="1560"
+            height="340"
+            loading="eager"
+            decoding="async"
             onError={() => setImgSrc(fallbackUrl)}
             className="w-full h-full object-cover object-center scale-[1.01]"
           />

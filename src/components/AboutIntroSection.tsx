@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Language } from '../types';
 import { ArrowRight, Sparkles } from 'lucide-react';
+import { getOptimizedCloudinaryUrl, getCloudinarySrcSet } from '../utils/cloudinary';
 
 interface AboutIntroSectionProps {
   currentLanguage: Language;
@@ -10,7 +11,7 @@ interface AboutIntroSectionProps {
 export const AboutIntroSection: React.FC<AboutIntroSectionProps> = ({ currentLanguage }) => {
   const isId = currentLanguage === 'id';
 
-  // The exact 4 Cloudinary images requested
+  // The exact 4 Cloudinary images requested - optimized with responsive dimensions
   const images = {
     img1: 'https://res.cloudinary.com/di6ziqvtp/image/upload/v1790771775/58135db0-5806-4d5a-b7f7-fcdba0b65dde.png',
     img2: 'https://res.cloudinary.com/di6ziqvtp/image/upload/v1790767969/558720c6-5250-4840-877f-7baab5c6d63a.png',
@@ -111,19 +112,29 @@ export const AboutIntroSection: React.FC<AboutIntroSectionProps> = ({ currentLan
             {/* Image 1: Top Left */}
             <div className="rounded-3xl overflow-hidden shadow-lg h-48 sm:h-64 border border-neutral-200 bg-neutral-100">
               <img
-                src={images.img1}
+                src={getOptimizedCloudinaryUrl(images.img1, { width: 500 })}
+                srcSet={getCloudinarySrcSet(images.img1, [240, 360, 500])}
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 300px"
                 alt="GedeBaliTrip Experience 1"
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                width="300"
+                height="256"
                 loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
               />
             </div>
             {/* Image 2: Bottom Left */}
             <div className="rounded-3xl overflow-hidden shadow-lg h-40 sm:h-52 border border-neutral-200 bg-neutral-100">
               <img
-                src={images.img2}
+                src={getOptimizedCloudinaryUrl(images.img2, { width: 500 })}
+                srcSet={getCloudinarySrcSet(images.img2, [240, 360, 500])}
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 300px"
                 alt="GedeBaliTrip Experience 2"
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                width="300"
+                height="208"
                 loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
               />
             </div>
           </div>
@@ -132,19 +143,29 @@ export const AboutIntroSection: React.FC<AboutIntroSectionProps> = ({ currentLan
             {/* Image 3: Top Right */}
             <div className="rounded-3xl overflow-hidden shadow-lg h-40 sm:h-52 border border-neutral-200 bg-neutral-100">
               <img
-                src={images.img3}
+                src={getOptimizedCloudinaryUrl(images.img3, { width: 500 })}
+                srcSet={getCloudinarySrcSet(images.img3, [240, 360, 500])}
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 300px"
                 alt="GedeBaliTrip Experience 3"
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                width="300"
+                height="208"
                 loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
               />
             </div>
             {/* Image 4: Bottom Right */}
             <div className="rounded-3xl overflow-hidden shadow-lg h-48 sm:h-64 border border-neutral-200 bg-neutral-100">
               <img
-                src={images.img4}
+                src={getOptimizedCloudinaryUrl(images.img4, { width: 500 })}
+                srcSet={getCloudinarySrcSet(images.img4, [240, 360, 500])}
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 300px"
                 alt="GedeBaliTrip Experience 4"
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                width="300"
+                height="256"
                 loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
               />
             </div>
           </div>

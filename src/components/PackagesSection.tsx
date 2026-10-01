@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { TourPackage, Language } from '../types';
 import { Star, Clock, ArrowRight, Sparkles, CheckCircle2, Car } from 'lucide-react';
+import { getOptimizedCloudinaryUrl, getCloudinarySrcSet } from '../utils/cloudinary';
 
 interface PackagesSectionProps {
   packages: TourPackage[];
@@ -50,10 +51,15 @@ export const PackagesSection: React.FC<PackagesSectionProps> = ({
               {/* Image with Tag & Rating */}
               <Link to={`/paket/${pkg.id}`} className="block relative h-48 sm:h-52 w-full overflow-hidden bg-neutral-100">
                 <img
-                  src={pkg.image}
+                  src={getOptimizedCloudinaryUrl(pkg.image, { width: 600 })}
+                  srcSet={getCloudinarySrcSet(pkg.image, [360, 480, 640])}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   alt={pkg.title}
+                  width="400"
+                  height="225"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute top-3 left-3">
                   <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500 text-neutral-950 shadow-md">

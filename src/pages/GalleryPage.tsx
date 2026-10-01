@@ -2,13 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { PageHeaderBanner } from '../components/PageHeaderBanner';
 import { Language, TourPackage, GalleryPhoto } from '../types';
 import { GALLERY_PHOTOS, COMPANY_INFO } from '../data/packages';
-import destNusaPenida from '../assets/images/dest_nusa_penida_1790762116021.jpg';
-import destNusaDua from '../assets/images/dest_nusa_dua_1790762148639.jpg';
-import destBedugul from '../assets/images/dest_bedugul_1790762178211.jpg';
-import destHandara from '../assets/images/dest_handara_gate_1790762202129.jpg';
-import destUluwatu from '../assets/images/dest_uluwatu_1790762218410.jpg';
-import destGwk from '../assets/images/dest_gwk_1790762239403.jpg';
-import teamPhoto from '../assets/images/tour_guide_team_1790762639170.jpg';
+import { getOptimizedCloudinaryUrl, getCloudinarySrcSet } from '../utils/cloudinary';
 import {
   Camera,
   MapPin,
@@ -33,42 +27,42 @@ const ALL_GALLERY_PHOTOS: GalleryPhoto[] = [
     title: 'Nusa Dua Coastal Serenity',
     location: 'Nusa Dua Beach Peninsula, Bali Selatan',
     category: 'Pantai & Samudra',
-    imageUrl: destNusaDua,
+    imageUrl: 'https://res.cloudinary.com/di6ziqvtp/image/upload/v1790767733/e21b3225-7131-4edd-9019-2e47c4890635.png',
   },
   {
     id: 'g8',
     title: 'Handara Gate Panoramic View',
     location: 'Pancasari, Sukasada, Buleleng',
     category: 'Pura Bersejarah',
-    imageUrl: destHandara,
+    imageUrl: 'https://res.cloudinary.com/di6ziqvtp/image/upload/v1790767876/db0395d9-f101-4890-b382-b3dc1626de0a.png',
   },
   {
     id: 'g9',
     title: 'Pura Luhur Uluwatu Cliff',
     location: 'Pecatu, Kuta Selatan',
     category: 'Seni & Budaya',
-    imageUrl: destUluwatu,
+    imageUrl: 'https://res.cloudinary.com/di6ziqvtp/image/upload/v1790768100/551bf87a-06ee-4f26-8f8f-c854b502cd31.png',
   },
   {
     id: 'g10',
     title: 'Kemegahan Patung GWK Bali',
     location: 'Ungasan, Bali Selatan',
     category: 'Seni & Budaya',
-    imageUrl: destGwk,
+    imageUrl: 'https://res.cloudinary.com/di6ziqvtp/image/upload/v1790768104/antonia-nicoletta-irawan-V0cOEHVx1cE-unsplash_cfm3nz.webp',
   },
   {
     id: 'g11',
     title: 'Pura Ulun Danu Beratan Mist',
     location: 'Danau Beratan, Candikuning, Bedugul',
     category: 'Alam & Pegunungan',
-    imageUrl: destBedugul,
+    imageUrl: 'https://res.cloudinary.com/di6ziqvtp/image/upload/v1790767969/558720c6-5250-4840-877f-7baab5c6d63a.png',
   },
   {
     id: 'g12',
     title: 'Armada Bersih & Driver Ramah Kami',
     location: 'Sanur Hub, Denpasar',
     category: 'Kuliner & Momen',
-    imageUrl: teamPhoto,
+    imageUrl: 'https://res.cloudinary.com/di6ziqvtp/image/upload/v1790771775/58135db0-5806-4d5a-b7f7-fcdba0b65dde.png',
   },
 ];
 
@@ -169,10 +163,15 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
               className="group relative rounded-3xl overflow-hidden bg-neutral-900 aspect-4/3 cursor-pointer shadow-md hover:shadow-2xl transition-all duration-300 transform-gpu hover:-translate-y-1 border border-neutral-200"
             >
               <img
-                src={photo.imageUrl}
+                src={getOptimizedCloudinaryUrl(photo.imageUrl, { width: 640 })}
+                srcSet={getCloudinarySrcSet(photo.imageUrl, [360, 480, 640])}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 alt={photo.title}
+                width="400"
+                height="300"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
+                decoding="async"
               />
 
               {/* Gradient overlay */}

@@ -4,6 +4,7 @@ import { PageHeaderBanner } from '../components/PageHeaderBanner';
 import { Language, TourPackage } from '../types';
 import { CARS } from '../data/cars';
 import { COMPANY_INFO } from '../data/packages';
+import { getOptimizedCloudinaryUrl, getCloudinarySrcSet } from '../utils/cloudinary';
 import {
   Star,
   Clock,
@@ -79,7 +80,17 @@ export const PackagesPage: React.FC<PackagesPageProps> = ({
             >
               <div>
                 <Link to={`/paket/${pkg.id}`} className="block relative h-48 sm:h-52 w-full overflow-hidden bg-neutral-100 group">
-                  <img src={pkg.image} alt={pkg.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                  <img
+                    src={getOptimizedCloudinaryUrl(pkg.image, { width: 600 })}
+                    srcSet={getCloudinarySrcSet(pkg.image, [360, 480, 640])}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    alt={pkg.title}
+                    width="400"
+                    height="225"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                    decoding="async"
+                  />
                   <div className="absolute top-3 left-3">
                     <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500 text-neutral-950 shadow-md">
                       {pkg.tag}

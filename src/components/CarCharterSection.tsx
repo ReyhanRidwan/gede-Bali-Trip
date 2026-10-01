@@ -3,6 +3,7 @@ import { CARS } from '../data/cars';
 import { COMPANY_INFO } from '../data/packages';
 import { Language } from '../types';
 import { Car } from 'lucide-react';
+import { getOptimizedCloudinaryUrl, getCloudinarySrcSet } from '../utils/cloudinary';
 
 interface CarCharterSectionProps {
   currentLanguage: Language;
@@ -25,12 +26,26 @@ export const CarCharterSection: React.FC<CarCharterSectionProps> = ({ currentLan
         
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {displayedCars.map((car) => (
-                <div key={car.id} className="bg-white p-4 rounded-3xl border border-neutral-200 shadow-sm text-center group hover:shadow-lg transition-all">
-                    <img src={car.imageUrl} alt={car.name} className="w-full h-40 object-contain mb-4 group-hover:scale-105 transition-transform" />
-                    <h4 className="text-sm font-bold mb-4 text-neutral-800">{car.name}</h4>
+                <div key={car.id} className="bg-white p-4 rounded-3xl border border-neutral-200 shadow-sm text-center group hover:shadow-lg transition-all flex flex-col justify-between">
+                    <div>
+                      <div className="w-full h-40 flex items-center justify-center mb-4 overflow-hidden">
+                        <img
+                          src={getOptimizedCloudinaryUrl(car.imageUrl, { width: 360 })}
+                          srcSet={getCloudinarySrcSet(car.imageUrl, [200, 320, 480])}
+                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 240px"
+                          alt={car.name}
+                          width="240"
+                          height="160"
+                          loading="lazy"
+                          decoding="async"
+                          className="w-full h-40 object-contain group-hover:scale-105 transition-transform"
+                        />
+                      </div>
+                      <h4 className="text-sm font-bold mb-4 text-neutral-800">{car.name}</h4>
+                    </div>
                     <a
                       href={`https://wa.me/${COMPANY_INFO.whatsapp}?text=${encodeURIComponent(
-                        `Halo GedeBaliTrip, saya ingin konsultasi harga untuk sewa mobil: *${car.name}*.`
+                        `Hello GedeBaliTrip, I would like to get a price quote and availability for car charter: *${car.name}*. Please provide details.`
                       )}`}
                       target="_blank"
                       rel="noopener noreferrer"

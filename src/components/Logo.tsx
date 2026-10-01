@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { COMPANY_INFO } from '../data/packages';
+import { getOptimizedCloudinaryUrl } from '../utils/cloudinary';
 
 interface LogoProps {
   className?: string;
@@ -15,6 +16,14 @@ export const Logo: React.FC<LogoProps> = ({ className = '', size = 'md' }) => {
     lg: 'w-14 h-14'
   };
 
+  const pixelDimensions = {
+    sm: 32,
+    md: 44,
+    lg: 56,
+  };
+
+  const dimension = pixelDimensions[size];
+
   return (
     <div
       id="brand-logo-container"
@@ -22,8 +31,12 @@ export const Logo: React.FC<LogoProps> = ({ className = '', size = 'md' }) => {
     >
       {!imageError ? (
         <img
-          src={COMPANY_INFO.logoUrl}
+          src={getOptimizedCloudinaryUrl(COMPANY_INFO.logoUrl, { width: dimension * 2 })}
           alt="GedeBaliTrip Logo"
+          width={dimension}
+          height={dimension}
+          loading="eager"
+          decoding="async"
           className="w-full h-full object-contain p-0.5"
           onError={() => setImageError(true)}
         />
