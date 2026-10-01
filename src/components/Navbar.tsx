@@ -18,13 +18,32 @@ export const Navbar: React.FC<NavbarProps> = ({
   isInnerPage = false,
 }) => {
   const [isPackageDropdownOpen, setIsPackageDropdownOpen] = useState(false);
+  const [isMobilePackageMenuOpen, setIsMobilePackageMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
 
   const isId = currentLanguage === 'id';
   const pathname = location.pathname;
+
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    setIsPackageDropdownOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    timeoutRef.current = setTimeout(() => {
+      setIsPackageDropdownOpen(false);
+    }, 600);
+  };
 
   // Close dropdown when clicked outside
   useEffect(() => {
@@ -34,24 +53,30 @@ export const Navbar: React.FC<NavbarProps> = ({
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, []);
 
   // Close mobile menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
+    setIsMobilePackageMenuOpen(false);
     setIsPackageDropdownOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [location.pathname]);
 
   const isHome = pathname === '/';
   const isAbout = pathname === '/tentang-kami';
-  const isPackages = pathname === '/paket';
+  const isPackages = pathname === '/paket' || pathname === '/sewa-mobil';
   const isGallery = pathname === '/dokumentasi';
   const isContact = pathname === '/hubungi-kami';
 
   return (
-    <header className={`w-full z-30 ${isInnerPage ? 'bg-neutral-950/95 backdrop-blur-md border-b border-white/10 sticky top-0 py-3.5 px-4 sm:px-6 lg:px-8 shadow-lg' : 'relative'}`}>
+    <header className={`w-full z-50 ${isInnerPage ? 'bg-neutral-950/95 backdrop-blur-md border-b border-white/10 sticky top-0 py-3.5 px-4 sm:px-6 lg:px-8 shadow-lg' : 'relative'}`}>
       <div className={`w-full flex items-center justify-between ${isInnerPage ? 'max-w-[1560px] mx-auto' : ''}`}>
         {/* Left: Logo & Brand Name */}
         <Link
@@ -101,74 +126,83 @@ export const Navbar: React.FC<NavbarProps> = ({
             {isId ? 'Tentang Kami' : 'About Us'}
           </Link>
 
-          {/* Paket with Dropdown */}
-          <div className="relative" ref={dropdownRef}>
-            <div className="flex items-center">
-              <Link
-                to="/paket"
+          {/* Paket with Hover & Click Dropdown */}
+          <div 
+            className="relative py-2" 
+            ref={dropdownRef}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                setIsPackageDropdownOpen((prev) => !prev);
+              }}
+              className="flex items-center cursor-pointer select-none group focus:outline-none"
+              aria-expanded={isPackageDropdownOpen}
+              aria-haspopup="true"
+            >
+              <span
                 id="nav-link-paket"
-                className={`transition-colors font-medium cursor-pointer pr-1 ${
+                className={`transition-colors font-medium pr-1.5 ${
                   isPackages
                     ? 'text-[#f59e0b] font-semibold'
-                    : 'text-white/90 hover:text-white'
+                    : 'text-white/90 group-hover:text-white'
                 }`}
               >
                 {isId ? 'Paket' : 'Packages'}
-              </Link>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setIsPackageDropdownOpen(!isPackageDropdownOpen);
-                }}
-                className="text-white/80 hover:text-amber-400 p-1 cursor-pointer transition-colors"
-                aria-label="Toggle package dropdown"
-              >
-                <ChevronDown
-                  className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                    isPackageDropdownOpen ? 'rotate-180 text-amber-400' : ''
-                  }`}
-                />
-              </button>
-            </div>
+              </span>
+              <ChevronDown
+                className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                  isPackageDropdownOpen ? 'rotate-180 text-amber-400' : 'text-white/80 group-hover:text-amber-400'
+                }`}
+              />
+            </button>
 
-            {/* Dropdown Menu */}
+            {/* Dropdown Menu - Seamlessly bridged with buffer timer */}
             {isPackageDropdownOpen && (
               <div
                 id="paket-dropdown-menu"
-                className="absolute top-full right-0 mt-2 w-72 bg-neutral-900/95 backdrop-blur-xl border border-white/15 rounded-2xl p-2 shadow-2xl z-50 animate-in fade-in slide-in-from-top-2"
+                className="absolute top-full left-1/2 -translate-x-1/2 pt-1.5 w-56 z-50 select-none"
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
               >
-                <div className="px-3 py-2 text-xs font-semibold text-neutral-400 uppercase tracking-wider border-b border-white/10 mb-1">
-                  {isId ? 'Pilihan Paket Tour Bali' : 'Bali Tour Packages'}
-                </div>
-                {packages.map((pkg) => (
-                  <button
-                    key={pkg.id}
-                    id={`dropdown-pkg-${pkg.id}`}
-                    type="button"
-                    onClick={() => {
-                      onSelectPackage(pkg);
-                      setIsPackageDropdownOpen(false);
-                    }}
-                    className="w-full text-left px-3 py-2 rounded-xl hover:bg-white/10 text-white transition-all flex items-center justify-between group cursor-pointer"
-                  >
-                    <div>
-                      <div className="text-sm font-medium text-white group-hover:text-amber-400 transition-colors">
-                        {isId ? pkg.title : pkg.titleEn}
-                      </div>
-                      <div className="text-xs text-neutral-400">
-                        {isId ? pkg.duration : pkg.durationEn} • USD ${pkg.price}
-                      </div>
-                    </div>
-                  </button>
-                ))}
-                <div className="pt-2 mt-1 border-t border-white/10">
+                {/* Generous invisible hover buffer that covers top, sides, and bottom */}
+                <div 
+                  className="absolute -top-5 -left-8 -right-8 -bottom-5 pointer-events-auto"
+                  onMouseEnter={handleMouseEnter}
+                />
+
+                <div 
+                  className="relative bg-white rounded-2xl p-2.5 shadow-2xl border border-neutral-200 ring-1 ring-black/5"
+                  onMouseEnter={handleMouseEnter}
+                >
                   <Link
                     to="/paket"
-                    onClick={() => setIsPackageDropdownOpen(false)}
-                    className="block w-full py-2 text-center text-xs font-semibold text-amber-400 hover:text-amber-300 rounded-lg hover:bg-amber-500/10 transition cursor-pointer"
+                    onMouseEnter={handleMouseEnter}
+                    onClick={() => {
+                      setIsPackageDropdownOpen(false);
+                      navigate('/paket');
+                    }}
+                    className="w-full text-left px-4 py-3.5 rounded-xl hover:bg-amber-50 text-neutral-900 transition-colors flex items-center justify-between group/item cursor-pointer"
                   >
-                    {isId ? 'Lihat Semua Paket Tour →' : 'View All Tour Packages →'}
+                    <div className="text-sm font-bold text-neutral-900 group-hover/item:text-amber-600 transition-colors">
+                      {isId ? 'Paket Tour' : 'Tour Packages'}
+                    </div>
+                  </Link>
+                  <Link
+                    to="/sewa-mobil"
+                    onMouseEnter={handleMouseEnter}
+                    onClick={() => {
+                      setIsPackageDropdownOpen(false);
+                      navigate('/sewa-mobil');
+                    }}
+                    className="w-full text-left px-4 py-3.5 rounded-xl hover:bg-amber-50 text-neutral-900 transition-colors flex items-center justify-between group/item cursor-pointer"
+                  >
+                    <div className="text-sm font-bold text-neutral-900 group-hover/item:text-amber-600 transition-colors">
+                      {isId ? 'Sewa Mobil' : 'Car Charter'}
+                    </div>
                   </Link>
                 </div>
               </div>
@@ -241,15 +275,35 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               {isId ? 'Tentang Kami' : 'About Us'}
             </Link>
-            <Link
-              to="/paket"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={`text-left px-3.5 py-2.5 rounded-xl font-medium transition ${
-                isPackages ? 'text-amber-400 bg-white/10' : 'text-neutral-200 hover:bg-white/5'
-              }`}
-            >
-              {isId ? 'Paket Tour Terlengkap' : 'Tour Packages'}
-            </Link>
+            <div className="relative">
+              <button
+                onClick={() => setIsMobilePackageMenuOpen(!isMobilePackageMenuOpen)}
+                className={`w-full text-left px-3.5 py-2.5 rounded-xl font-medium transition flex items-center justify-between ${
+                  isPackages ? 'text-amber-400 bg-white/10' : 'text-neutral-200 hover:bg-white/5'
+                }`}
+              >
+                <span>{isId ? 'Paket & Sewa Mobil' : 'Packages & Charter'}</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${isMobilePackageMenuOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {isMobilePackageMenuOpen && (
+                <div className="pl-4 mt-1 flex flex-col gap-1 border-l-2 border-white/20 ml-2">
+                  <Link
+                    to="/paket"
+                    onClick={() => { setIsMobileMenuOpen(false); setIsMobilePackageMenuOpen(false); }}
+                    className="text-neutral-300 hover:text-amber-400 px-3 py-2 text-sm"
+                  >
+                    {isId ? 'Paket Tour' : 'Tour Packages'}
+                  </Link>
+                  <Link
+                    to="/sewa-mobil"
+                    onClick={() => { setIsMobileMenuOpen(false); setIsMobilePackageMenuOpen(false); }}
+                    className="text-neutral-300 hover:text-amber-400 px-3 py-2 text-sm"
+                  >
+                    {isId ? 'Sewa Mobil' : 'Car Charter'}
+                  </Link>
+                </div>
+              )}
+            </div>
             <Link
               to="/dokumentasi"
               onClick={() => setIsMobileMenuOpen(false)}

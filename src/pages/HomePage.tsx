@@ -2,6 +2,7 @@ import React from 'react';
 import { Hero } from '../components/Hero';
 import { ParadiseBaliSection } from '../components/ParadiseBaliSection';
 import { PackagesSection } from '../components/PackagesSection';
+import { CarCharterSection } from '../components/CarCharterSection';
 import { AboutIntroSection } from '../components/AboutIntroSection';
 import { TestimonialsSection } from '../components/TestimonialsSection';
 import { Language, TourPackage } from '../types';
@@ -39,6 +40,9 @@ export const HomePage: React.FC<HomePageProps> = ({
         currentLanguage={currentLanguage}
         onSelectPackage={onSelectPackage}
       />
+
+      {/* Simple Car Charter Section with first 4 cars */}
+      <CarCharterSection currentLanguage={currentLanguage} />
 
       {/* "Eh, Kenalin Dulu Yuk! 👋" Story & 4 Photos Collage (without Mengapa Memilih Kami) */}
       <AboutIntroSection currentLanguage={currentLanguage} />

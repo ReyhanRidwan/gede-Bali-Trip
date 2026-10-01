@@ -105,7 +105,7 @@ export const Hero: React.FC<HeroProps> = ({
 
         {/* Top Navbar Area */}
         <div
-          className={`relative z-20 px-6 sm:px-10 lg:px-12 pt-6 sm:pt-8 transition-all duration-1000 ease-out ${
+          className={`relative z-50 px-6 sm:px-10 lg:px-12 pt-6 sm:pt-8 transition-all duration-1000 ease-out ${
             isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
           }`}
         >
@@ -118,7 +118,7 @@ export const Hero: React.FC<HeroProps> = ({
 
         {/* Center Hero Headline & Tag with Fade-in Animation */}
         <div
-          className={`relative z-20 my-auto py-10 sm:py-16 px-4 sm:px-6 flex flex-col items-center justify-center text-center transition-all duration-1000 delay-150 ease-out ${
+          className={`relative z-10 my-auto py-10 sm:py-16 px-4 sm:px-6 flex flex-col items-center justify-center text-center transition-all duration-1000 delay-150 ease-out ${
             isLoaded ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-6'
           }`}
         >

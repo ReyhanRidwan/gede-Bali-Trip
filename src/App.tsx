@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
 import { PackagesPage } from './pages/PackagesPage';
+import { CarCharterPage } from './pages/CarCharterPage';
 import { PackageDetailPage } from './pages/PackageDetailPage';
 import { GalleryPage } from './pages/GalleryPage';
 import { ContactPage } from './pages/ContactPage';
@@ -44,6 +45,15 @@ export default function App() {
               path="/paket"
               element={
                 <PackagesPage
+                  currentLanguage={currentLanguage}
+                  packages={TOUR_PACKAGES}
+                />
+              }
+            />
+            <Route
+              path="/sewa-mobil"
+              element={
+                <CarCharterPage
                   currentLanguage={currentLanguage}
                   packages={TOUR_PACKAGES}
                 />

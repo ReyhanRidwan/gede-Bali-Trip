@@ -74,7 +74,7 @@ export const TOUR_PACKAGES: TourPackage[] = [
     priceNoteEn: '/ car (up to 10 hours)',
     rating: 5.0,
     reviewsCount: 312,
-    image: 'https://res.cloudinary.com/di6ziqvtp/image/upload/v1790771775/58135db0-5806-4d5a-b7f7-fcdba0b65dde.png',
+    image: 'https://res.cloudinary.com/di6ziqvtp/image/upload/v1790768100/551bf87a-06ee-4f26-8f8f-c854b502cd31.png',
     description: "Explore Bali's spectacular southern coastline and finish your day with the legendary sunset at Uluwatu Temple.",
     descriptionEn: "Explore Bali's spectacular southern coastline and finish your day with the legendary sunset at Uluwatu Temple.",
     destinations: [

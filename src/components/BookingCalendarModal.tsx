@@ -198,11 +198,11 @@ export const BookingCalendarModal: React.FC<BookingCalendarModalProps> = ({
     >
       <div
         id="booking-modal-window"
-        className="bg-white rounded-t-3xl sm:rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl relative border border-neutral-200 flex flex-col md:flex-row h-[92vh] sm:h-auto sm:max-h-[90vh]"
+        className="bg-white rounded-t-3xl sm:rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl relative border border-neutral-200 flex flex-col md:flex-row h-[92vh] sm:h-[650px] sm:max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* MODAL MAIN CONTENT (Form & Calendar) - Takes 100% space on mobile */}
-        <div className="flex-1 flex flex-col h-full bg-white overflow-hidden">
+        <div className="flex-1 flex flex-col h-full bg-white overflow-hidden min-h-0">
           {/* Top Bar with Title & Close Button */}
           <div className="p-4 sm:p-5 pb-3 border-b border-neutral-100 flex items-center justify-between gap-3 shrink-0 bg-neutral-50/80">
             <div>
@@ -253,7 +253,7 @@ export const BookingCalendarModal: React.FC<BookingCalendarModalProps> = ({
           </div>
 
           {/* Scrollable Form Content (Large & Spacious) */}
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
+          <div className="flex-1 overflow-y-auto min-h-0 p-4 sm:p-6 space-y-4">
             {errorMessage && (
               <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs font-semibold text-rose-700">
                 ⚠️ {errorMessage}
@@ -595,6 +595,26 @@ export const BookingCalendarModal: React.FC<BookingCalendarModalProps> = ({
             <p className="text-[10px] text-neutral-400 mt-0.5">
               {isId ? `(${carsNeeded} mobil s.d 10 jam)` : `(${carsNeeded} car up to 10 hrs)`}
             </p>
+
+            {/* Desktop Sidebar Action Button */}
+            {activeTab === 'date' ? (
+              <button
+                type="button"
+                onClick={() => setActiveTab('details')}
+                className="w-full mt-3.5 bg-amber-500 hover:bg-amber-400 active:scale-98 text-neutral-950 font-bold py-3 px-4 rounded-xl text-xs sm:text-sm transition flex items-center justify-center gap-2 cursor-pointer shadow-md"
+              >
+                <span>{isId ? 'Lanjut ke Data ⟶' : 'Continue ⟶'}</span>
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={handleFinalSubmit}
+                className="w-full mt-3.5 bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white font-bold py-3 px-4 rounded-xl text-xs sm:text-sm transition flex items-center justify-center gap-2 cursor-pointer shadow-md"
+              >
+                <MessageCircle className="w-4 h-4 shrink-0" />
+                <span>{isId ? 'Konfirmasi ke WhatsApp' : 'Confirm via WhatsApp'}</span>
+              </button>
+            )}
           </div>
         </div>
       </div>
