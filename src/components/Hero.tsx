@@ -97,12 +97,12 @@ export const Hero: React.FC<HeroProps> = ({
                 }`}
               >
                 <img
-                  src={getOptimizedCloudinaryUrl(slide.url, { width: 800 })}
-                  srcSet={getCloudinarySrcSet(slide.url, [360, 480, 800, 1200, 1600])}
-                  sizes="(max-width: 768px) 100vw, 1560px"
+                  src={getOptimizedCloudinaryUrl(slide.url, { width: 1920, quality: 'auto:best' })}
+                  srcSet={getCloudinarySrcSet(slide.url, [1080, 1440, 1920, 2400], { quality: 'auto:best' })}
+                  sizes="100vw"
                   alt={slide.alt}
-                  width="1560"
-                  height="820"
+                  width="1920"
+                  height="1080"
                   className={`w-full h-full object-cover object-center transition-transform duration-7000 ease-out ${
                     isActive ? 'scale-105' : 'scale-100'
                   }`}

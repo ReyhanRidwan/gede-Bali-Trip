@@ -45,13 +45,14 @@ export function getOptimizedCloudinaryUrl(
 
 export function getCloudinarySrcSet(
   url: string,
-  widths: number[] = [360, 480, 720, 1080]
+  widths: number[] = [360, 480, 720, 1080],
+  options?: { quality?: string; format?: string }
 ): string {
   if (!url || typeof url !== 'string' || !url.includes('res.cloudinary.com') || !url.includes('/image/upload/')) {
     return '';
   }
 
   return widths
-    .map((w) => `${getOptimizedCloudinaryUrl(url, { width: w })} ${w}w`)
+    .map((w) => `${getOptimizedCloudinaryUrl(url, { width: w, ...options })} ${w}w`)
     .join(', ');
 }
