@@ -13,7 +13,7 @@ export const AboutIntroSection: React.FC<AboutIntroSectionProps> = ({ currentLan
 
   // The exact 4 Cloudinary images requested - optimized with responsive dimensions
   const images = {
-    img1: 'https://res.cloudinary.com/di6ziqvtp/image/upload/v1790771775/58135db0-5806-4d5a-b7f7-fcdba0b65dde.png',
+    img1: 'https://res.cloudinary.com/di6ziqvtp/image/upload/v1790937374/cfc6844e-f137-4275-a7a2-aea9b8a1e6f9.png',
     img2: 'https://res.cloudinary.com/di6ziqvtp/image/upload/v1790767969/558720c6-5250-4840-877f-7baab5c6d63a.png',
     img3: 'https://res.cloudinary.com/di6ziqvtp/image/upload/v1790771595/3fa8842f-aa2a-4672-b70c-fbabe682af19.png',
     img4: 'https://res.cloudinary.com/di6ziqvtp/image/upload/v1790767733/e21b3225-7131-4edd-9019-2e47c4890635.png',

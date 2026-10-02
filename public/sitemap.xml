@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  
+  <!-- Homepage -->
+  <url>
+    <loc>https://gedebalitrip.com/</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Tour Packages Catalog -->
+  <url>
+    <loc>https://gedebalitrip.com/paket</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Car Charter -->
+  <url>
+    <loc>https://gedebalitrip.com/sewa-mobil</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Package Detail: Ubud Highlights -->
+  <url>
+    <loc>https://gedebalitrip.com/paket/ubud-highlights</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Package Detail: Uluwatu & Sunset -->
+  <url>
+    <loc>https://gedebalitrip.com/paket/uluwatu-sunset</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Package Detail: Lempuyang Temple -->
+  <url>
+    <loc>https://gedebalitrip.com/paket/lempuyang-temple</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Package Detail: Lovina Dolphin Experience -->
+  <url>
+    <loc>https://gedebalitrip.com/paket/lovina-dolphin-experience</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Package Detail: Jatiluwih Rice Terraces -->
+  <url>
+    <loc>https://gedebalitrip.com/paket/jatiluwih-rice-terraces</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Contact & Reservation Page -->
+  <url>
+    <loc>https://gedebalitrip.com/hubungi-kami</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- About Us Page -->
+  <url>
+    <loc>https://gedebalitrip.com/tentang-kami</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Documentation & Gallery -->
+  <url>
+    <loc>https://gedebalitrip.com/dokumentasi</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>
