@@ -408,6 +408,7 @@ export const COMPANY_INFO = {
   whatsapp: '6281239633946',
   email: 'gedearisuyasa88@gmail.com',
   mapsUrl: 'https://share.google/EXlDdXxcrgDPMnE3L',
+  googleReviewsUrl: 'https://www.google.com/search?sca_esv=4724c275248d28cc&hl=en-ID&sxsrf=APpeQntASrqH6tTfspM07XnmoH7xBwXDcw:1791010871347&q=gede+bali+trip+reviews&uds=AJ5uw19FvK8NFgoGuMIksH8tJZVhKUPCC9nt_0g55kZEwznxR8L_UvpHGASw0yppUNwNMklJUPpmh24viiIv96xKSh_mt69fzdWKJWyeeXrP_gOflPiYBLhNIwjjey5F0Pw5zGfm2Ml2ZdR5dtlH9ZXyDQwEQymLQp1ZEQMUPMo4dUTm8bHJcsaLTbP30joWykMT3_7p906yYGAZ9oVl7ckMstU0bkwIlbnEJfp1FujkwJM0Lf2TNC8x6BXcWmY8bZkPbrESPOulgvAUQxnuMdCPP6gU_2LOgE5hHQh63najfhHbKluHJ79tKjZvw72_rcJDxJqe75UuZTL2Q-YtVfcxHkblBSIVAdbOmf_E3jqAPYhhyoQ9BqYdEomfN4fyjOOmKLlE8_FDO-DdCry0CT9BCv4VksMqow&si=APenkKm7iecQ4G6P-TsbSMFKIQtv3EFIqRAFw-i8uEbk55Z-_2dEln5h9QgVW2vcp-UPv0iBiUApU7eeOO0qRu7t0tZW6ILVJY89pdxj6bjl7zJiT9e83iu3IUnEDTilGeVmKRajylha&sa=X&ved=2ahUKEwiOw5m2o52XAxUTxTgGHfCCLkIQk8gLegQIfxAB&ictx=1&biw=360&bih=739&dpr=2',
   logoUrl: 'https://res.cloudinary.com/di6ziqvtp/image/upload/v1790767286/cropped_circle_image_qvcsmp.png',
   address: 'Jalan Teratai, Gang Mawar, Mawar IV no 19, Celuk Sukawati, Gianyar Bali 80582',
   hours: '08:00 - 22:00 WITA (Setiap Hari)'
